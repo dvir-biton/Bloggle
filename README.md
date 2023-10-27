@@ -26,4 +26,6 @@ If you have any questions or feedback, feel free to [contact us](mailto:fylora18
 
 ## Showcase
 
-![Bloggle Showcase](https://imgur.com/a/mQ8yrHs)
+![Bloggle post](https://i.imgur.com/FLUz4mi.png)
+![Bloggle profile](https://imgur.com/zRjrxKk)
+![Bloggle main screen](https://i.imgur.com/znFcJDb.png)

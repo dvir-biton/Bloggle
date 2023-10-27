@@ -56,6 +56,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
 
+    implementation(project(":core"))
+
     // viewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 

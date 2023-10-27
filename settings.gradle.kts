@@ -17,3 +17,4 @@ rootProject.name = "Bloggle"
 include(":app")
 include(":auth")
 include(":blog")
+include(":core")

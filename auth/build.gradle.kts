@@ -55,6 +55,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
 
+    implementation(project(":core"))
+
     // navigation
     implementation("io.github.raamcosta.compose-destinations:core:1.9.53")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.9.53")

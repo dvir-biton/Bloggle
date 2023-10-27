@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("de.mannodermaus.android-junit5")
 }
 
 android {
@@ -50,10 +51,13 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // testing
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
+    testImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
+    testImplementation("io.mockk:mockk:1.12.5")
 
     implementation(project(":core"))
 

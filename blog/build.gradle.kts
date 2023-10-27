@@ -74,4 +74,9 @@ dependencies {
     // Compose Nav Destinations
     implementation("io.github.raamcosta.compose-destinations:core:1.9.53")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.9.53")
+
+    // hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
 }

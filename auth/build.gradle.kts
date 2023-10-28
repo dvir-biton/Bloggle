@@ -67,10 +67,6 @@ dependencies {
 
     implementation(project(":core"))
 
-    // navigation
-    implementation("io.github.raamcosta.compose-destinations:core:1.9.53")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.53")
-
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")

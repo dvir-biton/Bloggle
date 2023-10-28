@@ -1,4 +1,4 @@
-package com.fylora.auth.presentation
+package com.fylora.auth.presentation.signup
 
 sealed interface UiState {
     data class UsernameTextFieldError(val message: String): UiState

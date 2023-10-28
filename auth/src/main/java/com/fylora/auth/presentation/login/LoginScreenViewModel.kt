@@ -3,11 +3,9 @@ package com.fylora.auth.presentation.login
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fylora.auth.domain.use_case.ValidatePasswordUseCase
-import com.fylora.auth.domain.use_case.ValidateUsernameUseCase
-import com.fylora.auth.domain.use_case.ValidationResult
+import com.fylora.auth.data.AuthRepository
+import com.fylora.auth.data.AuthResult
 import com.fylora.auth.presentation.UiEvent
-import com.fylora.auth.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -16,8 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val validatePasswordUseCase: ValidatePasswordUseCase,
-    private val validateUsernameUseCase: ValidateUsernameUseCase
+    private val repository: AuthRepository
 ): ViewModel() {
 
     var usernameText = mutableStateOf(TextFieldState())
@@ -26,11 +23,14 @@ class LoginScreenViewModel @Inject constructor(
     var passwordText = mutableStateOf(TextFieldState())
         private set
 
+    var isLoading = mutableStateOf(false)
+        private set
+
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    private val _uiState = Channel<UiState>()
-    val uiState = _uiState.receiveAsFlow()
+    private val _error = Channel<String>()
+    val error = _error.receiveAsFlow()
 
     fun onEvent(event: LoginScreenEvent) {
         when(event) {
@@ -57,27 +57,20 @@ class LoginScreenViewModel @Inject constructor(
                 )
             }
             LoginScreenEvent.OnLoginButtonClick -> {
-                val isPasswordValid = validatePasswordUseCase(passwordText.value.text)
-                val isUsernameValid = validateUsernameUseCase(usernameText.value.text)
-
                 viewModelScope.launch {
-                    if(isPasswordValid is ValidationResult.Error){
-                        _uiState.send(
-                            UiState.PasswordTextFieldError(
-                                isPasswordValid.message ?: "Invalid password"
-                            )
-                        )
-                        return@launch
+                    isLoading.value = true
+                    val result = repository.signIn(
+                        username = usernameText.value.text,
+                        password = passwordText.value.text
+                    )
+                    isLoading.value = false
+
+                    if(result is AuthResult.Authorized) {
+                        _uiEvent.send(UiEvent.Success)
                     }
-                    if(isUsernameValid is ValidationResult.Error) {
-                        _uiState.send(
-                            UiState.UsernameTextFieldError(
-                                isUsernameValid.message ?: "Invalid username"
-                            )
-                        )
-                        return@launch
+                    else {
+                        _error.send(result.data ?: "Unknown error")
                     }
-                    _uiEvent.send(UiEvent.Success)
                 }
             }
             LoginScreenEvent.OnSignUpScreenClick -> {

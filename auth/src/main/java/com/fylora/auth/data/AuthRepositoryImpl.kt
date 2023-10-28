@@ -3,6 +3,7 @@ package com.fylora.auth.data
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 class AuthRepositoryImpl(
     private val authApi: AuthApi,
@@ -26,10 +27,12 @@ class AuthRepositoryImpl(
                 println("the error is HTTP exception: $error")
                 AuthResult.UnknownError(error)
             }
+        } catch (e: SocketTimeoutException) {
+            AuthResult.UnknownError("Timeout, please check your internet connection and try again.")
         } catch (e: Exception) {
             e.printStackTrace()
             println("the error is unknown")
-            AuthResult.UnknownError(null)
+            AuthResult.UnknownError()
         }
     }
 
@@ -51,8 +54,12 @@ class AuthRepositoryImpl(
             } else {
                 AuthResult.UnknownError(e.response()?.errorBody()?.string())
             }
+        } catch (e: SocketTimeoutException) {
+            println("timeout error")
+            AuthResult.UnknownError("Timeout, please check your internet connection and try again.")
         } catch (e: Exception) {
             println("Unknown error signing in")
+            e.printStackTrace()
             AuthResult.UnknownError("Unknown error signing in")
         }
     }
@@ -68,6 +75,8 @@ class AuthRepositoryImpl(
             } else {
                 AuthResult.UnknownError(e.response()?.errorBody()?.string())
             }
+        } catch (e: SocketTimeoutException) {
+            AuthResult.UnknownError("Timeout, please check your internet connection and try again.")
         } catch (e: Exception) {
             AuthResult.UnknownError("You are not authorized")
         }

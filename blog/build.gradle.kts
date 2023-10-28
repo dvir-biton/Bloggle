@@ -31,6 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
 }
 
 dependencies {
@@ -79,4 +85,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     ksp("com.google.dagger:hilt-android-compiler:2.48")
+
+    // icons
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
 }

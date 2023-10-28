@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import com.fylora.auth.data.AuthApi
 import com.fylora.auth.data.AuthRepository
 import com.fylora.auth.data.AuthRepositoryImpl
+import com.fylora.auth.domain.use_case.ValidatePasswordUseCase
+import com.fylora.auth.domain.use_case.ValidateUsernameUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +32,17 @@ object AuthModule {
     @ViewModelScoped
     fun provideAuthRepository(authApi: AuthApi, preferences: SharedPreferences): AuthRepository {
         return AuthRepositoryImpl(authApi, preferences)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideValidatePasswordUseCase(): ValidatePasswordUseCase {
+        return ValidatePasswordUseCase()
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideValidateUsernameUseCase(): ValidateUsernameUseCase {
+        return ValidateUsernameUseCase()
     }
 }

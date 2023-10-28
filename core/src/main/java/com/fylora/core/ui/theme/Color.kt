@@ -11,3 +11,5 @@ val DarkBackground = Color(0xFF222222)
 val DarkGray = Color(0xFF252525)
 val Gray = Color(0xFF333333)
 val DarkerGray = Color(0xFF383838)
+
+val TextFieldColor = Color(0x801C1C1C)

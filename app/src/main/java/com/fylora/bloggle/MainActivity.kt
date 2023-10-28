@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fylora.auth.presentation.login.LoginScreen
 import com.fylora.auth.presentation.signup.SignupScreen
+import com.fylora.auth.presentation.splash.SplashScreen
 import com.fylora.bloggle.navigation.Route
 import com.fylora.core.ui.theme.BloggleTheme
 import com.fylora.core.ui.theme.DarkBackground
@@ -45,8 +46,18 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavHost(
                             navController = navController,
-                            startDestination = Route.LOGIN
+                            startDestination = Route.SPLASH
                         ) {
+                            composable(Route.SPLASH) {
+                                SplashScreen(
+                                    navigateToLogin = {
+                                        navController.navigate(Route.LOGIN)
+                                    },
+                                    onSuccess = {
+                                        navController.navigate(Route.FEED)
+                                    }
+                                )
+                            }
                             composable(Route.LOGIN) {
                                 LoginScreen(
                                     snackbarHostState = snackbarHostState,

@@ -44,19 +44,6 @@ class SignupScreenViewModel @Inject constructor(
     private val _error = Channel<String>()
     val error = _error.receiveAsFlow()
 
-    init {
-        viewModelScope.launch {
-            val result = repository.authenticate()
-
-            if(result is AuthResult.Authorized){
-                _uiEvent.send(
-                    UiEvent.Success
-                )
-            }
-        }
-    }
-
-
     fun onEvent(event: SignupScreenEvent) {
         when(event) {
             is SignupScreenEvent.ChangedConfirmPasswordFocus -> {

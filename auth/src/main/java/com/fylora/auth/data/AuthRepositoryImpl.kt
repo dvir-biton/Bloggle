@@ -71,14 +71,17 @@ class AuthRepositoryImpl(
             authApi.authenticate("Bearer $token")
             AuthResult.Authorized()
         } catch (e: HttpException) {
+            e.printStackTrace()
             if(e.code() == HttpCodes.UNAUTHORIZED.code){
                 AuthResult.Unauthorized(e.response()?.errorBody()?.string())
             } else {
                 AuthResult.UnknownError(e.response()?.errorBody()?.string())
             }
         } catch (e: SocketTimeoutException) {
+            e.printStackTrace()
             AuthResult.UnknownError("Timeout, please check your internet connection and try again.")
         } catch (e: Exception) {
+            e.printStackTrace()
             AuthResult.UnknownError("You are not authorized")
         }
     }

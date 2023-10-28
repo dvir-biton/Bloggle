@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fylora.auth.data.AuthRepository
 import com.fylora.auth.data.AuthResult
+import com.fylora.auth.presentation.TextFieldState
 import com.fylora.auth.presentation.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

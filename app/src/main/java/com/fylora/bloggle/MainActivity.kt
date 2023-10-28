@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fylora.auth.presentation.login.LoginScreen
+import com.fylora.auth.presentation.signup.SignupScreen
 import com.fylora.bloggle.navigation.Route
 import com.fylora.core.ui.theme.BloggleTheme
 import com.fylora.core.ui.theme.DarkBackground
@@ -24,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                                 LoginScreen(
                                     snackbarHostState = snackbarHostState,
                                     onSuccess = {
-                                        // TODO: nav to bloggle
+                                        navController.navigate(Route.FEED)
                                     },
                                     navToSignUp = {
                                         navController.navigate(Route.SIGNUP)
@@ -57,6 +59,17 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable(Route.SIGNUP) {
+                                SignupScreen(
+                                    snackbarHostState = snackbarHostState,
+                                    onSuccess = {
+                                        navController.navigate(Route.FEED)
+                                    },
+                                    navToLogin = {
+                                        navController.navigate(Route.LOGIN)
+                                    }
+                                )
+                            }
+                            composable(Route.FEED) {
 
                             }
                         }

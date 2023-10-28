@@ -2,6 +2,7 @@ package com.fylora.auth.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -55,12 +58,19 @@ fun AuthTextField(
     var isTextVisible by remember {
         mutableStateOf(false)
     }
+    val focusRequester = remember { FocusRequester() }
+    val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = Modifier
             .padding(horizontal = 20.dp)
             .clip(RoundedCornerShape(4.dp))
-            .background(TextFieldColor),
+            .background(TextFieldColor)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = { focusRequester.requestFocus() }
+            ),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -99,6 +109,7 @@ fun AuthTextField(
                         .onFocusChanged {
                             onFocusChange(it)
                         }
+                        .focusRequester(focusRequester)
                 )
                 if(isHintVisible) {
                     Text(

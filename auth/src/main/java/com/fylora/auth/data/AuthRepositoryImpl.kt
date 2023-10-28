@@ -66,7 +66,8 @@ class AuthRepositoryImpl(
 
     override suspend fun authenticate(): AuthResult<String> {
         return try {
-            val token = prefs.getString("jwt", null) ?: return AuthResult.Unauthorized("You are not authorized")
+            val token = prefs.getString("jwt", null)
+                ?: return AuthResult.Unauthorized("You are not authorized")
             authApi.authenticate("Bearer $token")
             AuthResult.Authorized()
         } catch (e: HttpException) {

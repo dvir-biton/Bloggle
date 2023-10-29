@@ -105,7 +105,7 @@ fun PostPreview() {
         post = Post(
             authorId = "Test",
             authorName = "Test",
-            body = "What do you call fish with no eyes?? A fsh (hahahahahaha)",
+            body = "What do you call fish with no eyes?? A fsh (hahahahahahaha)",
             userLiked = mutableListOf("1", "2", "3", "4", "5", "6"),
             comments = mutableListOf(),
             postId = "Test",

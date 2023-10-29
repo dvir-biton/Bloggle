@@ -86,6 +86,30 @@ class AuthRepositoryImpl(
         }
     }
 
+    override suspend fun getInfo() {
+        return try {
+            val token = prefs.getString("jwt", null)
+                ?: return
+            val result = authApi.getInfo("Bearer $token")
+            val regex = Regex("userId:(\\w+)&username:(\\w+)")
+            val match = regex.find(result)
+
+            val userId = match?.groupValues?.get(1)
+            val username = match?.groupValues?.get(2)
+
+            if(username == null || userId == null) {
+                return
+            }
+
+            prefs.edit {
+                this.putString("userId", userId)
+                this.putString("username", username)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override suspend fun logout() {
         prefs.edit {
             this.remove("jwt")

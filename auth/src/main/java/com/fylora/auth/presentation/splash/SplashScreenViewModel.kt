@@ -6,6 +6,7 @@ import com.fylora.auth.data.AuthRepository
 import com.fylora.auth.data.AuthResult
 import com.fylora.auth.presentation.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class SplashScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            async { repository.getInfo() }.await()
             val result = repository.authenticate()
 
             if(result is AuthResult.Authorized){

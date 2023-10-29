@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.fylora.blog"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24

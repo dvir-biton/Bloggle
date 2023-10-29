@@ -15,7 +15,6 @@ sealed class Request(val type: String) {
         fun Request.generateRequest(): String {
             return when(this) {
                 is GetAccount -> "${this.type}&${this.userId}"
-                GetNotifications -> this.type
                 is GetPost -> "${this.type}&${this.postId}"
                 is MakeComment -> "${this.type}&${this.postId};${this.body}"
                 is MakeFollow -> "${this.type}&${this.userId}"
@@ -23,6 +22,7 @@ sealed class Request(val type: String) {
                 is MakeLikePost -> "${this.type}&${this.postId}"
                 is MakePost -> "${this.type}&${this.body}"
                 is SearchAccounts -> "${this.type}&${this.query}"
+                GetNotifications -> this.type
             }
         }
     }

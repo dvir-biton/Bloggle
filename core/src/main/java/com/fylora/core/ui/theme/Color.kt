@@ -9,6 +9,7 @@ val LightGray = Color(0xFFD9D9D9)
 
 val DarkBackground = Color(0xFF222222)
 val DarkGray = Color(0xFF252525)
+val MiddleGray = Color(0xFF282828)
 val Gray = Color(0xFF333333)
 val DarkerGray = Color(0xFF383838)
 

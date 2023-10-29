@@ -1,5 +1,9 @@
 package com.fylora.blog.data.model
 
+import com.fylora.core.ui.theme.DarkGray
+import com.fylora.core.ui.theme.DarkerGray
+import com.fylora.core.ui.theme.Gray
+import com.fylora.core.ui.theme.MiddleGray
 import kotlinx.serialization.Serializable
 import java.util.UUID
 
@@ -12,4 +16,13 @@ data class Post(
     val comments: MutableList<Comment> = mutableListOf(),
     val postId: String = UUID.randomUUID().toString(),
     val timestamp: Long = System.currentTimeMillis(),
-)
+) {
+    companion object {
+        val colors = listOf(
+            DarkGray,
+            DarkerGray,
+            Gray,
+            MiddleGray
+        )
+    }
+}

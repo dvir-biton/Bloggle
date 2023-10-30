@@ -82,8 +82,8 @@ fun PostComp(
                     tint = Red,
                     amount = post.userLiked.size.toString(),
                     onClick = {
-                        onLike()
                         isLikedState = !isLikedState
+                        onLike()
                     }
                 )
                 Spacer(modifier = Modifier.width(15.dp))

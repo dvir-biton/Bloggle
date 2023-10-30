@@ -35,7 +35,10 @@ import com.fylora.core.ui.theme.LightGray
 import com.fylora.core.ui.theme.Yellow
 
 @Composable
-fun SendTextField(textFieldData: TextFieldData) {
+fun SendTextField(
+    textFieldData: TextFieldData,
+    onSend: () -> Unit
+) {
     val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -75,7 +78,10 @@ fun SendTextField(textFieldData: TextFieldData) {
             Icon(
                 imageVector = Icons.Default.Send,
                 contentDescription = "Send",
-                tint = Yellow
+                tint = Yellow,
+                modifier = Modifier.clickable {
+                    onSend()
+                }
             )
             Spacer(modifier = Modifier.width(8.dp))
             Box(modifier = Modifier.weight(1f)) {
@@ -120,5 +126,5 @@ fun SendTextFieldPreview() {
             isHintVisible = true,
             onFocusChange = {}
         )
-    )
+    ) {}
 }

@@ -20,6 +20,7 @@ import com.fylora.blog.data.model.Post
 fun Send(
     username: String,
     textFieldData: TextFieldData,
+    onSend: () -> Unit,
     onProfileClick: () -> Unit,
 ) {
     val color by remember {
@@ -43,7 +44,10 @@ fun Send(
                 onClick = onProfileClick
             )
             Spacer(modifier = Modifier.height(25.dp))
-            SendTextField(textFieldData)
+            SendTextField(
+                textFieldData,
+                onSend
+            )
         }
     }
 }
@@ -59,6 +63,7 @@ fun SendPreview() {
             hint = "What do you think?",
             isHintVisible = true,
             onFocusChange = {}
-        )
+        ),
+        onSend = {}
     ) {}
 }

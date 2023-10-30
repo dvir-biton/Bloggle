@@ -91,6 +91,7 @@ class AuthRepositoryImpl(
             val token = prefs.getString("jwt", null)
                 ?: return
             val result = authApi.getInfo("Bearer $token")
+            println("result: $result")
             val regex = Regex("userId:(\\w+)&username:(\\w+)")
             val match = regex.find(result)
 
@@ -105,8 +106,12 @@ class AuthRepositoryImpl(
                 this.putString("userId", userId)
                 this.putString("username", username)
             }
+            println("data: success loading user")
+            println("user ${prefs.getString("username", "error")}")
+            println("userid ${prefs.getString("userId", "error")}")
         } catch (e: Exception) {
             e.printStackTrace()
+            println("data: could not load user")
         }
     }
 

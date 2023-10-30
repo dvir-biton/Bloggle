@@ -43,7 +43,9 @@ fun BottomData(
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
-                    onClick = { onClick() }
+                    onClick = {
+                        onClick()
+                    }
                 ),
         )
         Spacer(modifier = Modifier.width(5.dp))

@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    kotlin("plugin.serialization") version "1.4.21"
+    kotlin("plugin.serialization") version "1.9.10"
 }
 
 android {
@@ -36,7 +36,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 }
 
@@ -65,6 +65,8 @@ dependencies {
 
     implementation(project(":core"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
     // viewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
@@ -75,8 +77,6 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-websockets:$ktor_version")
     implementation("io.ktor:ktor-client-logging:$ktor_version")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
     // hilt
     implementation("com.google.dagger:hilt-android:2.48")

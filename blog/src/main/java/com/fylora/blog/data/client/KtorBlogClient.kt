@@ -32,7 +32,7 @@ class KtorBlogClient @Inject constructor(
     init {
         runBlocking {
             session = client.webSocketSession {
-                url("ws://10.100.102.77:8080/connect")
+                url("ws://109.186.33.249:8080/connect")
 
                 headers {
                     append("Authorization", "Bearer $token")
@@ -41,15 +41,8 @@ class KtorBlogClient @Inject constructor(
         }
     }
 
-    override suspend fun sendRequest(request: Request): Flow<Response> {
+    override suspend fun getResponse(): Flow<Response> {
         return flow {
-            session.outgoing.send(
-                Frame.Text(
-                    Json.encodeToString(request)
-                )
-            )
-            println("sent request! $request")
-
             val response = session.incoming
                 .consumeAsFlow()
                 .filterIsInstance<Frame.Text>()
@@ -60,6 +53,15 @@ class KtorBlogClient @Inject constructor(
 
             emitAll(response)
         }
+    }
+
+    override suspend fun sendRequest(request: Request) {
+        session.outgoing.send(
+            Frame.Text(
+                Json.encodeToString(request)
+            )
+        )
+        println("sent request! $request")
     }
 
     override suspend fun close() {

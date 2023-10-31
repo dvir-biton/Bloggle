@@ -2,6 +2,7 @@ package com.fylora.blog.presentation.feed
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fylora.blog.data.client.BlogClient
@@ -36,16 +37,36 @@ class FeedViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            if(username == null || userId == null) {
+                _uiEvent.send(
+                    FeedUiEvent.ShowSnackBar(
+                        "Error loading user data"
+                    )
+                )
+                prefs.edit {
+                    this.remove("jwt")
+                }
+                return@launch
+            }
             blogClient.sendRequest(
                 Request.GetPosts
-            ).collect {
+            )
+            blogClient.getResponse().collect {
                 when(it) {
+                    is Response.ConfirmationResponse -> {
+                        println(
+                            "success: ${it.confirmation}"
+                        )
+                    }
                     is Response.ErrorResponse -> {
                         _uiEvent.send(
                             FeedUiEvent.ShowSnackBar(
                                 it.error
                             )
                         )
+                    }
+                    is Response.PostResponse -> {
+                        posts.value += it.post
                     }
                     is Response.PostsResponse -> {
                         posts.value = it.posts
@@ -70,26 +91,9 @@ class FeedViewModel @Inject constructor(
                         Request.MakePost(
                             postText.value
                         )
-                    ).collect {
-                        when(it) {
-                            is Response.ErrorResponse -> {
-                                println("failed added post")
-                                _uiEvent.send(
-                                    FeedUiEvent.ShowSnackBar(
-                                        it.error
-                                    )
-                                )
-                            }
-                            is Response.PostResponse -> {
-                                println("added post")
-                                posts.value += it.post
-                            }
-                            else -> {
-                                println("else post")
-                            }
-                        }
-                    }
+                    )
                 }
+                postText.value = ""
             }
             is FeedEvent.OnPostValueChange ->
                 postText.value = event.body
@@ -105,19 +109,7 @@ class FeedViewModel @Inject constructor(
                         Request.MakeLikePost(
                             event.postId
                         )
-                    ).collect {
-                        when(it) {
-                            is Response.ConfirmationResponse -> println("like!")
-                            is Response.ErrorResponse -> {
-                                _uiEvent.send(
-                                    FeedUiEvent.ShowSnackBar(
-                                        it.error
-                                    )
-                                )
-                            }
-                            else -> println("nah")
-                        }
-                    }
+                    )
                 }
             }
         }

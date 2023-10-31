@@ -47,6 +47,7 @@ class AuthRepositoryImpl(
             prefs.edit()
                 .putString("jwt", response.token)
                 .apply()
+            getInfo()
             AuthResult.Authorized()
         } catch (e: HttpException) {
             if(e.code() == HttpCodes.UNAUTHORIZED.code){

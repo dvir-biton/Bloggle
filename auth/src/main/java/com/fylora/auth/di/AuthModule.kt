@@ -22,7 +22,7 @@ object AuthModule {
     @ViewModelScoped
     fun provideAuthApi(): AuthApi {
         return Retrofit.Builder()
-            .baseUrl("http://10.100.102.77:8080/")
+            .baseUrl("http://109.186.33.249:8080/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create()

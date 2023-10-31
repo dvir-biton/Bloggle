@@ -48,9 +48,11 @@ fun FeedScreen(
         }
 
         items(viewModel.posts.value) {
+            val isLiked = viewModel.userId in it.userLiked
+            it.userLiked.remove(viewModel.userId)
             PostComp(
                 post = it,
-                isLiked = viewModel.userId in it.userLiked,
+                isLiked = isLiked,
                 onClick = { },
                 onLike = {
                     viewModel.onEvent(

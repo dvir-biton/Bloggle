@@ -8,4 +8,5 @@ object Route {
 
     // blog
     const val FEED = "feed"
+    const val SEARCH = "search"
 }

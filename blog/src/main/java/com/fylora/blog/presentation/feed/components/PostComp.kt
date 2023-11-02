@@ -41,8 +41,8 @@ fun PostComp(
     onLike: () -> Unit,
     onProfileClick: () -> Unit
 ) {
-    val color by remember {
-        mutableStateOf(Post.colors.random())
+    val color = remember {
+        Post.colors.random()
     }
     var isLikedState by remember {
         mutableStateOf(isLiked)

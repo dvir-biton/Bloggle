@@ -31,7 +31,7 @@ sealed class Request {
     data class GetPost(val postId: String): Request()
     @Serializable
     @SerialName("search_accounts")
-    data class SearchAccounts(val query: String): Request()
+    data class SearchAccounts(val query: String, val amount: Int): Request()
     @Serializable
     @SerialName("get_account")
     data class GetAccount(val userId: String): Request()

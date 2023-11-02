@@ -1,7 +1,7 @@
 package com.fylora.auth.presentation
 
 sealed interface UiEvent {
-    object Success: UiEvent
-    object NavigateToLogin: UiEvent
-    object NavigateToSignUp: UiEvent
+    data object Success: UiEvent
+    data object NavigateToLogin: UiEvent
+    data object NavigateToSignUp: UiEvent
 }

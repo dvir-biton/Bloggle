@@ -1,6 +1,8 @@
 package com.fylora.blog.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fylora.blog.data.model.Post
@@ -26,11 +29,20 @@ fun Send(
     val color by remember {
         mutableStateOf(Post.colors.random())
     }
+    val focusManager = LocalFocusManager.current
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
     
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color),
+            .background(color)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = { focusManager.clearFocus() }
+            )
     ) {
         Column(
             modifier = Modifier

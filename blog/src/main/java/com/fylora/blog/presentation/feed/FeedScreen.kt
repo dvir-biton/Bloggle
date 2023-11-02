@@ -14,12 +14,15 @@ import com.fylora.blog.presentation.feed.components.PostComp
 @Composable
 fun FeedScreen(
     viewModel: FeedViewModel = hiltViewModel(),
+    onNavigateToSearch: () -> Unit
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
         item {
-            BloggleTopBar {
-
-            }
+            BloggleTopBar(
+                onNavigateToSearch = onNavigateToSearch
+            )
 
             Send(
                 username = viewModel.username ?: "error",
@@ -47,7 +50,10 @@ fun FeedScreen(
             )
         }
 
-        items(viewModel.posts.value) {
+        items(
+            viewModel.posts.value,
+            key = { post -> post.postId }
+        ) {
             val isLiked = viewModel.userId in it.userLiked
             it.userLiked.remove(viewModel.userId)
             PostComp(

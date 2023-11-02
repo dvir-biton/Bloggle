@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fylora.blog.R
@@ -22,15 +23,17 @@ import com.fylora.core.ui.font.fontFamily
 
 @Composable
 fun UserComp(
+    modifier: Modifier = Modifier,
     username: String,
     timestamp: Long? = null,
+    userTextSize: TextUnit = 16.sp,
     onClick: () -> Unit
 ) {
     val date = timestamp?.let { getDateFromMillis(milliseconds = it) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable { onClick() }
+        modifier = modifier.clickable { onClick() }
     ) {
         Icon(
             painter = painterResource(id = R.drawable.pfp),
@@ -44,7 +47,7 @@ fun UserComp(
                 color = Color.White,
                 fontFamily = fontFamily,
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
+                fontSize = userTextSize
             )
             if(date != null) {
                 Text(

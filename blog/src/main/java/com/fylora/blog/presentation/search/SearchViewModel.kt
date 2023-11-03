@@ -25,9 +25,10 @@ class SearchViewModel @Inject constructor(
     var error = mutableStateOf("")
         private set
 
-    var accounts = emptyList<Account>()
+    var accounts = mutableStateOf(emptyList<Account>())
         private set
 
+    private var shouldLaunchAgain = true
 
     init {
         viewModelScope.launch {
@@ -35,13 +36,15 @@ class SearchViewModel @Inject constructor(
                 .collect {
                     when(it) {
                         is Response.AccountsResponse -> {
-                            accounts = it.account
+                            accounts.value = it.account
+                            println("search event: accounts received")
                         }
                         is Response.ErrorResponse -> {
                             error.value = it.error
-                            accounts = emptyList()
+                            accounts.value = emptyList()
+                            println("search event: error received")
                         }
-                        else -> Unit
+                        else -> println("search event: action failed?")
                     }
                 }
         }
@@ -70,6 +73,21 @@ class SearchViewModel @Inject constructor(
                             SEARCH_AMOUNT
                         )
                     )
+                    /*
+                        there was a problem with the flow not
+                        getting collected. should be fixed in
+                        the future. this works but pretty bad
+                        solution.
+                    */
+                    if(shouldLaunchAgain) {
+                        blogClient.sendRequest(
+                            Request.SearchAccounts(
+                                query.value,
+                                SEARCH_AMOUNT
+                            )
+                        )
+                        shouldLaunchAgain = false
+                    }
                 }
             }
             is SearchEvent.OnFocusChange -> {

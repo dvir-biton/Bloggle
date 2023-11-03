@@ -51,6 +51,7 @@ class KtorBlogClient @Inject constructor(
                     Json.decodeFromString<Response>(it.readText())
                 }
 
+            println("response: $response")
             emitAll(response)
         }
     }

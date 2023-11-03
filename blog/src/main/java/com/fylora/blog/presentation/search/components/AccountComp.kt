@@ -36,7 +36,8 @@ fun AccountComp(
             modifier = Modifier
                 .padding(vertical = 40.dp),
             username = username,
-            userTextSize = 24.sp
-        ) {}
+            userTextSize = 24.sp,
+            onClick = onClick
+        )
     }
 }

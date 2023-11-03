@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fylora.blog.data.client.BlogClient
+import com.fylora.blog.data.client.BlogClientManager
 import com.fylora.blog.data.client.Request
 import com.fylora.blog.data.client.Response
 import com.fylora.blog.data.model.Post
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FeedViewModel @Inject constructor(
     private val blogClient: BlogClient,
+    private val blogClientManager: BlogClientManager,
     prefs: SharedPreferences
 ): ViewModel() {
 
@@ -51,7 +53,7 @@ class FeedViewModel @Inject constructor(
             blogClient.sendRequest(
                 Request.GetPosts
             )
-            blogClient.getResponse().collect {
+            blogClientManager.responseFlow.collect {
                 when(it) {
                     is Response.ConfirmationResponse -> {
                         println(

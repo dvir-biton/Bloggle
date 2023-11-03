@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fylora.core.ui.font.fontFamily
+import com.fylora.core.ui.theme.LightGray
 import com.fylora.core.ui.theme.Yellow
 
 @Composable
@@ -24,13 +25,20 @@ fun ActionButton(
     color: Color = Yellow,
     textColor: Color = Color.Black,
     text: String,
+    isActive: Boolean = true,
     onClick: () -> Unit,
 ) {
+    val updatedModifier = modifier
+        .clip(RoundedCornerShape(32.dp))
+        .background(
+            color = if(isActive) color
+            else LightGray
+        )
+
     Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(32.dp))
-            .background(color = color)
-            .clickable { onClick() },
+        modifier = if(isActive)
+            updatedModifier.clickable { onClick() }
+            else updatedModifier,
         contentAlignment = Alignment.Center
     ) {
         Text(

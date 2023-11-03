@@ -13,14 +13,17 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.fylora.auth.presentation.login.LoginScreen
 import com.fylora.auth.presentation.signup.SignupScreen
 import com.fylora.auth.presentation.splash.SplashScreen
 import com.fylora.blog.presentation.feed.FeedScreen
-import com.fylora.blog.presentation.search.components.SearchScreen
+import com.fylora.blog.presentation.profile.ProfileScreen
+import com.fylora.blog.presentation.search.SearchScreen
 import com.fylora.bloggle.navigation.Route
 import com.fylora.core.ui.theme.BloggleTheme
 import com.fylora.core.ui.theme.DarkBackground
@@ -75,22 +78,49 @@ class MainActivity : ComponentActivity() {
                                 SignupScreen(
                                     snackbarHostState = snackbarHostState,
                                     onSuccess = {
-                                        navController.navigate(Route.FEED)
+                                        navController.navigate(
+                                            Route.FEED
+                                        )
                                     },
                                     navToLogin = {
-                                        navController.navigate(Route.LOGIN)
+                                        navController.navigate(
+                                            Route.LOGIN
+                                        )
                                     }
                                 )
                             }
                             composable(Route.FEED) {
                                 FeedScreen(
                                     onNavigateToSearch = {
-                                        navController.navigate(Route.SEARCH)
+                                        navController.navigate(
+                                            Route.SEARCH
+                                        )
+                                    },
+                                    onNavigateToAccount = { userId ->
+                                        navController.navigate(
+                                            Route.PROFILE + "/$userId"
+                                        )
                                     }
                                 )
                             }
+                            composable(
+                                route = Route.PROFILE + "/{userId}",
+                                arguments = listOf(
+                                    navArgument("userId") {
+                                        type = NavType.StringType
+                                    }
+                                )
+                            ) {
+                                ProfileScreen()
+                            }
                             composable(Route.SEARCH) {
-                                SearchScreen()
+                                SearchScreen(
+                                    onNavigateToAccount = { userId ->
+                                        navController.navigate(
+                                            Route.PROFILE + "/$userId"
+                                        )
+                                    }
+                                )
                             }
                         }
                     }

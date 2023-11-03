@@ -14,14 +14,15 @@ import com.fylora.blog.presentation.feed.components.PostComp
 @Composable
 fun FeedScreen(
     viewModel: FeedViewModel = hiltViewModel(),
-    onNavigateToSearch: () -> Unit
+    onNavigateToSearch: () -> Unit,
+    onNavigateToAccount: (userId: String) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
             BloggleTopBar(
-                onNavigateToSearch = onNavigateToSearch
+                onNavigateToSearch = onNavigateToSearch,
             )
 
             Send(
@@ -41,7 +42,11 @@ fun FeedScreen(
                         )
                     }
                 ),
-                onProfileClick = {},
+                onProfileClick = {
+                    onNavigateToAccount(
+                        viewModel.userId ?: "error"
+                    )
+                },
                 onSend = {
                     viewModel.onEvent(
                         FeedEvent.OnPostSend
@@ -66,10 +71,13 @@ fun FeedScreen(
                             it.postId
                         )
                     )
+                },
+                onProfileClick = {
+                    onNavigateToAccount(
+                        it.authorId
+                    )
                 }
-            ) {
-
-            }
+            )
         }
     }
 }

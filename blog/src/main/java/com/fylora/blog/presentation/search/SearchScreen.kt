@@ -1,4 +1,4 @@
-package com.fylora.blog.presentation.search.components
+package com.fylora.blog.presentation.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,15 +19,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.fylora.blog.presentation.search.SearchEvent
-import com.fylora.blog.presentation.search.SearchViewModel
+import com.fylora.blog.presentation.search.components.AccountComp
+import com.fylora.blog.presentation.search.components.SearchTextField
 import com.fylora.core.ui.font.fontFamily
 import com.fylora.core.ui.theme.DarkBackground
 import com.fylora.core.ui.theme.LightGray
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
+    onNavigateToAccount: (userId: String) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val interactionSource = remember { MutableInteractionSource() }
@@ -74,7 +75,9 @@ fun SearchScreen(
                     key = { account -> account.userId }
                 ) { account ->
                     AccountComp(username = account.username) {
-                        // TODO: nav to user
+                        onNavigateToAccount(
+                            account.userId
+                        )
                     }
                 }
             }

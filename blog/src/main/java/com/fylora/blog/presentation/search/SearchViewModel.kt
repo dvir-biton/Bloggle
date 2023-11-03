@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fylora.blog.data.client.BlogClient
+import com.fylora.blog.data.client.BlogClientManager
 import com.fylora.blog.data.client.Request
 import com.fylora.blog.data.client.Response
 import com.fylora.blog.data.model.Account
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val blogClient: BlogClient
+    private val blogClient: BlogClient,
+    private val blogClientManager: BlogClientManager,
 ): ViewModel() {
 
     var query = mutableStateOf("")
@@ -28,11 +30,9 @@ class SearchViewModel @Inject constructor(
     var accounts = mutableStateOf(emptyList<Account>())
         private set
 
-    private var shouldLaunchAgain = true
-
     init {
         viewModelScope.launch {
-            blogClient.getResponse()
+            blogClientManager.responseFlow
                 .collect {
                     when(it) {
                         is Response.AccountsResponse -> {
@@ -73,21 +73,6 @@ class SearchViewModel @Inject constructor(
                             SEARCH_AMOUNT
                         )
                     )
-                    /*
-                        there was a problem with the flow not
-                        getting collected. should be fixed in
-                        the future. this works but pretty bad
-                        solution.
-                    */
-                    if(shouldLaunchAgain) {
-                        blogClient.sendRequest(
-                            Request.SearchAccounts(
-                                query.value,
-                                SEARCH_AMOUNT
-                            )
-                        )
-                        shouldLaunchAgain = false
-                    }
                 }
             }
             is SearchEvent.OnFocusChange -> {

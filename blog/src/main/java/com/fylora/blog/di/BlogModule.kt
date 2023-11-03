@@ -2,6 +2,7 @@ package com.fylora.blog.di
 
 import android.content.SharedPreferences
 import com.fylora.blog.data.client.BlogClient
+import com.fylora.blog.data.client.BlogClientManager
 import com.fylora.blog.data.client.KtorBlogClient
 import dagger.Module
 import dagger.Provides
@@ -33,5 +34,13 @@ object BlogModule {
         prefs: SharedPreferences
     ): BlogClient {
         return KtorBlogClient(httpClient, prefs)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBlogClientManager(
+        blogClient: BlogClient
+    ): BlogClientManager {
+        return BlogClientManager(blogClient)
     }
 }

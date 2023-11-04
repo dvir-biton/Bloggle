@@ -35,7 +35,7 @@ fun PostScreen(
                 }
             )
             Send(
-                username = viewModel.post.authorName,
+                username = viewModel.username,
                 textFieldData = TextFieldData(
                     value = viewModel.commentText.value,
                     onValueChange = {

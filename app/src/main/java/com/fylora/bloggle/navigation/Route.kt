@@ -11,4 +11,5 @@ object Route {
     const val PROFILE = "profile"
     const val SEARCH = "search"
     const val POST = "post"
+    const val NOTIFICATIONS = "notifications"
 }

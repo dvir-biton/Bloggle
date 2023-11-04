@@ -35,6 +35,7 @@ class PostViewModel @Inject constructor(
 
     private var postJson = savedStateHandle.get<String>("post")!!
     var post = Json.decodeFromString<Post>(postJson)
+    val username = prefs.getString("username", null)!!
 
     val comments = mutableStateOf(emptyList<Comment>())
 

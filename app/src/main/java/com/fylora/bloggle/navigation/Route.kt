@@ -10,4 +10,5 @@ object Route {
     const val FEED = "feed"
     const val PROFILE = "profile"
     const val SEARCH = "search"
+    const val POST = "post"
 }

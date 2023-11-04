@@ -1,4 +1,4 @@
-package com.fylora.blog.presentation.feed
+package com.fylora.blog.presentation.post
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -6,76 +6,81 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.fylora.blog.presentation.components.BloggleTopBar
 import com.fylora.blog.presentation.components.Send
 import com.fylora.blog.presentation.components.TextFieldData
 import com.fylora.blog.presentation.feed.components.PostComp
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.fylora.blog.presentation.post.components.CommentComp
 
 @Composable
-fun FeedScreen(
-    viewModel: FeedViewModel = hiltViewModel(),
-    onNavigateToSearch: () -> Unit,
-    onNavigateToPost: (post: String) -> Unit,
+fun PostScreen(
+    viewModel: PostViewModel = hiltViewModel(),
     onNavigateToAccount: (userId: String) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
+        val isLiked = viewModel.userId!! in viewModel.post.userLiked
         item {
-            BloggleTopBar(
-                onNavigateToSearch = onNavigateToSearch,
+            PostComp(
+                post = viewModel.post,
+                isLiked = isLiked,
+                onClick = { }, // already in post
+                onLike = {
+                    viewModel.onEvent(
+                        PostEvent.OnPostLikeClick
+                    )
+                },
+                onProfileClick = {
+                    onNavigateToAccount(viewModel.post.authorId)
+                }
             )
-
             Send(
-                username = viewModel.username ?: "error",
+                username = viewModel.post.authorName,
                 textFieldData = TextFieldData(
-                    value = viewModel.postText.value,
+                    value = viewModel.commentText.value,
                     onValueChange = {
                         viewModel.onEvent(
-                            FeedEvent.OnPostValueChange(it)
+                            PostEvent.OnCommentValueChange(
+                                body = it
+                            )
                         )
                     },
-                    hint = "What's up?",
+                    hint = "What do you think?",
                     isHintVisible = viewModel.isHintVisible.value,
                     onFocusChange = {
                         viewModel.onEvent(
-                            FeedEvent.OnPostFocusChange(it)
+                            PostEvent.OnCommentFocusChange(
+                                focusState = it
+                            )
                         )
                     }
                 ),
                 onProfileClick = {
                     onNavigateToAccount(
-                        viewModel.userId ?: "error"
+                        viewModel.post.authorId
                     )
                 },
                 onSend = {
                     viewModel.onEvent(
-                        FeedEvent.OnPostSend
+                        PostEvent.OnCommentSend
                     )
                 }
             )
         }
 
         items(
-            viewModel.posts.value,
-            key = { post -> post.postId }
+            viewModel.comments.value,
+            key = { comment -> comment.commentId }
         ) {
-            val isLiked = viewModel.userId in it.userLiked
+            val isCommentLiked = viewModel.userId in it.userLiked
             it.userLiked.remove(viewModel.userId)
-            PostComp(
-                post = it,
-                isLiked = isLiked,
-                onClick = {
-                    onNavigateToPost(
-                        Json.encodeToString(it)
-                    )
-                },
+            CommentComp(
+                comment = it,
+                isLiked = isCommentLiked,
                 onLike = {
                     viewModel.onEvent(
-                        FeedEvent.OnPostLikeClick(
-                            it.postId
+                        PostEvent.OnCommentLikeClick(
+                            it.commentId
                         )
                     )
                 },

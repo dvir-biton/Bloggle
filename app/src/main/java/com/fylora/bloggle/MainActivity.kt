@@ -22,6 +22,7 @@ import com.fylora.auth.presentation.login.LoginScreen
 import com.fylora.auth.presentation.signup.SignupScreen
 import com.fylora.auth.presentation.splash.SplashScreen
 import com.fylora.blog.presentation.feed.FeedScreen
+import com.fylora.blog.presentation.post.PostScreen
 import com.fylora.blog.presentation.profile.ProfileScreen
 import com.fylora.blog.presentation.search.SearchScreen
 import com.fylora.bloggle.navigation.Route
@@ -96,6 +97,11 @@ class MainActivity : ComponentActivity() {
                                             Route.SEARCH
                                         )
                                     },
+                                    onNavigateToPost = { post ->
+                                        navController.navigate(
+                                            Route.POST + "/$post"
+                                        )
+                                    },
                                     onNavigateToAccount = { userId ->
                                         navController.navigate(
                                             Route.PROFILE + "/$userId"
@@ -111,7 +117,29 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                             ) {
-                                ProfileScreen()
+                                ProfileScreen(
+                                    onNavigateToPost = { post ->
+                                        navController.navigate(
+                                            Route.POST + "/$post"
+                                        )
+                                    },
+                                )
+                            }
+                            composable(
+                                route = Route.POST + "/{post}",
+                                arguments = listOf(
+                                    navArgument("post") {
+                                        type = NavType.StringType
+                                    }
+                                )
+                            ) {
+                                PostScreen(
+                                    onNavigateToAccount = { userId ->
+                                        navController.navigate(
+                                            Route.PROFILE + "/$userId"
+                                        )
+                                    }
+                                )
                             }
                             composable(Route.SEARCH) {
                                 SearchScreen(

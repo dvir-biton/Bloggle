@@ -25,10 +25,13 @@ import com.fylora.blog.presentation.profile.components.AccountDataBar
 import com.fylora.blog.presentation.profile.components.UserProfile
 import com.fylora.core.ui.font.fontFamily
 import com.fylora.core.ui.theme.DarkBackground
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
+    onNavigateToPost: (post: String) -> Unit
 ) {
     if(
         viewModel.isLoading.value
@@ -90,7 +93,11 @@ fun ProfileScreen(
                             PostComp(
                                 post = it,
                                 isLiked = isLiked,
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    onNavigateToPost(
+                                        Json.encodeToString(it)
+                                    )
+                                },
                                 onLike = {
                                     viewModel.onLike(it.postId)
                                 },

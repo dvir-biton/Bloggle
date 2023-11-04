@@ -68,7 +68,19 @@ class FeedViewModel @Inject constructor(
                         )
                     }
                     is Response.PostResponse -> {
-                        posts.value += it.post
+                        val isPostInList = posts.value.any { post ->
+                            post.postId == it.post.postId
+                        }
+                        if(isPostInList) {
+                            val index = posts.value.indexOfFirst { post ->
+                                post.postId == it.post.postId
+                            }
+                            val list = posts.value.toMutableList()
+                            list[index] = it.post
+                            posts.value = list
+                        } else {
+                            posts.value += it.post
+                        }
                     }
                     is Response.PostsResponse -> {
                         posts.value = it.posts

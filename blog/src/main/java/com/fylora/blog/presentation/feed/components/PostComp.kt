@@ -80,8 +80,7 @@ fun PostComp(
                 BottomData(
                     icon = if(isLikedState) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                     tint = Red,
-                    amount = if(isLikedState) (post.userLiked.size + 1).toString()
-                            else post.userLiked.size.toString(),
+                    amount = post.userLiked.size.toString(),
                     onClick = {
                         isLikedState = !isLikedState
                         onLike()

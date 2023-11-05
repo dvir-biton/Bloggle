@@ -63,7 +63,6 @@ fun FeedScreen(
             key = { post -> post.postId }
         ) {
             val isLiked = viewModel.userId in it.userLiked
-            it.userLiked.remove(viewModel.userId)
             PostComp(
                 post = it,
                 isLiked = isLiked,

@@ -33,10 +33,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     onNavigateToPost: (post: String) -> Unit
 ) {
-    if(
-        viewModel.isLoading.value
-        && viewModel.error.value.isBlank()
-    ) {
+    if(viewModel.isLoading.value) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

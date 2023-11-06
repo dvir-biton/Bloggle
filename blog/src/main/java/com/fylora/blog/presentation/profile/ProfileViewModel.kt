@@ -68,9 +68,6 @@ class ProfileViewModel @Inject constructor(
                                     isFollowing.value = !isFollowing.value
                                 }
                             }
-                            is Response.ErrorResponse -> {
-                                error.value = it.error
-                            }
                             else -> Unit
                         }
                     }

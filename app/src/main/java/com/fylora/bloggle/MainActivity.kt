@@ -77,16 +77,19 @@ class MainActivity : ComponentActivity() {
                         if(shouldShowBottomBar) {
                             BottomNavBar(
                                 onNavigateToProfile = {
+                                    navController.popBackStack()
                                     currentRoute = Route.PROFILE
                                     navController.navigate(
                                         Route.PROFILE + "/$userId"
                                     )
                                 },
                                 onNavigateToFeed = {
+                                    navController.popBackStack()
                                     currentRoute = Route.FEED
                                     navController.navigate(Route.FEED)
                                 },
                                 onNavigateToNotifications = {
+                                    navController.popBackStack()
                                     currentRoute = Route.NOTIFICATIONS
                                     navController.navigate(Route.NOTIFICATIONS)
                                 },
@@ -113,6 +116,7 @@ class MainActivity : ComponentActivity() {
                                     onSuccess = {
                                         shouldShowBottomBar = true
                                         currentRoute = Route.FEED
+                                        navController.popBackStack()
                                         navController.navigate(Route.FEED)
                                     }
                                 )

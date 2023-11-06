@@ -38,10 +38,6 @@ class NotificationViewModel @Inject constructor(
                         is Response.NotificationsResponse -> {
                             notifications.value = it.notification.take(20)
                         }
-                        is Response.ErrorResponse -> {
-                            error.value = it.error
-                            notifications.value = emptyList()
-                        }
                         else -> Unit
                     }
                 }

@@ -60,13 +60,6 @@ class FeedViewModel @Inject constructor(
                             "success: ${it.confirmation}"
                         )
                     }
-                    is Response.ErrorResponse -> {
-                        _uiEvent.send(
-                            FeedUiEvent.ShowSnackBar(
-                                it.error
-                            )
-                        )
-                    }
                     is Response.PostResponse -> {
                         val isPostInList = posts.value.any { post ->
                             post.postId == it.post.postId
@@ -79,7 +72,9 @@ class FeedViewModel @Inject constructor(
                             list[index] = it.post
                             posts.value = list
                         } else {
-                            posts.value += it.post
+                            val mutableList = posts.value.toMutableList()
+                            mutableList.add(0, it.post)
+                            posts.value = mutableList
                         }
                     }
                     is Response.PostsResponse -> {

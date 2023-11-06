@@ -57,18 +57,15 @@ class PostViewModel @Inject constructor(
                             "success: ${it.confirmation}"
                         )
                     }
-                    is Response.ErrorResponse -> {
-                        _showSnackBar.send(
-                            it.error
-                        )
-                    }
                     is Response.PostResponse -> {
                         post = it.post
                         comments.value = post.comments
                     }
                     is Response.CommentResponse -> {
-                        comments.value += it.comment
-                        post.comments.add(it.comment)
+                        val mutableList = comments.value.toMutableList()
+                        mutableList.add(0, it.comment)
+                        comments.value = mutableList
+                        post.comments.add(0, it.comment)
                     }
                     else -> Unit
                 }

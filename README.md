@@ -1,4 +1,4 @@
-# Bloggle
+# Bloggle 
 The new lightweight social network for everyone!
 
 ## About Bloggle

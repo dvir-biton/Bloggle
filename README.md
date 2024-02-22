@@ -1,4 +1,4 @@
-![image](https://github.com/fylora/Bloggle/assets/141432352/080e6a56-e0dd-437b-ab3d-d260b38c6ff5)# Bloggle 
+# Bloggle 
 The new lightweight social network for everyone!
 
 ## About Bloggle

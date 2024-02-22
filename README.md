@@ -1,4 +1,4 @@
-# Bloggle 
+![image](https://github.com/fylora/Bloggle/assets/141432352/080e6a56-e0dd-437b-ab3d-d260b38c6ff5)# Bloggle 
 The new lightweight social network for everyone!
 
 ## About Bloggle
@@ -26,7 +26,5 @@ If you have any questions or feedback, feel free to [contact us](mailto:fylora18
 
 ## Showcase
 
-![Bloggle post](https://i.imgur.com/FLUz4mi.png)
-![Bloggle profile](https://i.imgur.com/zRjrxKk.png)
-![Bloggle main screen](https://i.imgur.com/znFcJDb.png)
-![Bloggle notifications](https://i.imgur.com/b0ugFGs.png)
+![Bloggle post](https://imgur.com/ePQFXAQ)
+![Bloggle profile](https://imgur.com/uXm44EG)
